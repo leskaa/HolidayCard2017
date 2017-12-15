@@ -14,16 +14,16 @@ int menuType = 0;
 void setup() {
   size(1200, 800);
   //Set all PImage variables to images in data file
-  moon = loadImage("MoonBackgroundDark.png");
-  giftImage = loadImage("Gift.png");
-  santaRight = loadImage("Santa.png");
-  santaLeft = loadImage("SantaLeft.png");
-  chimneyBack = loadImage("Chimney.png");
-  chimneyBackLeft = loadImage("ChimneyLeft.png");
-  chimneyBackRight = loadImage("ChimneyRight.png");
-  chimneyFront = loadImage("ChimneyFront.png");
-  chimneyFrontLeft = loadImage("ChimneyFrontLeft.png");
-  chimneyFrontRight = loadImage("ChimneyFrontRight.png");
+  moon = loadImage("Data/MoonBackgroundDark.png");
+  giftImage = loadImage("Data/Gift.png");
+  santaRight = loadImage("Data/Santa.png");
+  santaLeft = loadImage("Data/SantaLeft.png");
+  chimneyBack = loadImage("Data/Chimney.png");
+  chimneyBackLeft = loadImage("Data/ChimneyLeft.png");
+  chimneyBackRight = loadImage("Data/ChimneyRight.png");
+  chimneyFront = loadImage("Data/ChimneyFront.png");
+  chimneyFrontLeft = loadImage("Data/ChimneyFrontLeft.png");
+  chimneyFrontRight = loadImage("Data/ChimneyFrontRight.png");
 }
 
 void draw() {
