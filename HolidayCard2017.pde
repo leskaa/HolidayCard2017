@@ -347,7 +347,7 @@ public class GiftController {
       }
       //Check if gift has made it to bottom of chimney and increase score
       if (current.chimneyCollision(player.getX()-40, player.getY()+30, 80, 20)) {
-        gifts.remove(i);
+        gifts.set(null);
         addScore();
       }
     }
