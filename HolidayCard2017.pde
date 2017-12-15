@@ -319,8 +319,8 @@ public class GiftController {
   public void update(int seconds) {
     //flag used to prevent concurent modification error
     boolean lossFlag = false;
-    for (Iterator<Gift> iterator = gifts.iterator(); iterator.hasNext(); ) {
-      Gift current = iterator.next();
+    for (int i = gifts.size()-1; i>=0; i--) {
+      Gift current = gifts.get(i);
       current.update();
       //Check if gift fell past screen
       if (current.gameLoss()) {
@@ -347,7 +347,7 @@ public class GiftController {
       }
       //Check if gift has made it to bottom of chimney and increase score
       if (current.chimneyCollision(player.getX()-40, player.getY()+30, 80, 20)) {
-        iterator.remove();
+        gifts.remove(i);
         addScore();
       }
     }
