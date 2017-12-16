@@ -257,6 +257,10 @@ public class Gift {
     //Start gifts at random point on sin path
     angle=(float)Math.random()*360;
   }
+  
+  public void setYPos(int yPos){
+  this.yPos=yPos;
+  }
 
   //Update the position of Hitboxes and Graphical Component of Gift
   public void update() {
@@ -347,7 +351,7 @@ public class GiftController {
       }
       //Check if gift has made it to bottom of chimney and increase score
       if (current.chimneyCollision(player.getX()-40, player.getY()+30, 80, 20)) {
-        gifts.remove(i);
+        gifts.get(i).setYPos(-9999999);
         addScore();
       }
     }
