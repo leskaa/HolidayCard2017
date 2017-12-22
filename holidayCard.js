@@ -3,18 +3,21 @@ var gifts = [];
 var santa;
 var player;
 var isLeft, isRight;
-var giftImage, santaRight, santaLeft, chimneyBack, chimneyBackLeft, chimneyBackRight, chimneyFront, chimneyFrontLeft, chimneyFrontRight;
+var giftImage, santaRight, santaLeft, chimneyBack, chimneyBackLeft, chimneyBackRight, chimneyFront, chimneyFrontLeft, chimneyFrontRight, code;
 var milliseconds = 0;
 var lastTimeReset = 0;
 var score = 0;
 var giftSpeed = 4;
+var nextDrop = 2;
+var dropRate = 6;
+var nextDropRateIncrease = 10;
 var nextSantaSpeedIncrease = 5000;
 var nextGiftSpeedIncrease = 10000;
 const GAME_STATE_MENU = 0;
 const GAME_STATE_LOST = 1;
 const GAME_STATE_PLAYING = 2;
 const GAME_STATE_AUTOPLAYING = 3;
-var gameState = GAME_STATE_MENU;
+var gameState = GAME_STATE_AUTOPLAYING;
 
 function setup() {
   frameRate(30);
@@ -28,9 +31,10 @@ function setup() {
   chimneyFront = loadImage("Data/ChimneyFront.png");
   chimneyFrontLeft = loadImage("Data/ChimneyFrontLeft.png");
   chimneyFrontRight = loadImage("Data/ChimneyFrontRight.png");
+  code = loadImage("Data/QRCode.png");
   santa = new Sleigh();
   player = new Chimney();
-  for (var i = 0; i < (width + height) / 10; i++) {
+  for (var i = 0; i < (width + height) / 20; i++) {
     lightSnow.push(new Snowflake());
   }
 }
@@ -58,25 +62,45 @@ function draw() {
 function drawMenu() {
   textSize(width / 12.5);
   text("Happy Holidays", width / 4, height / 4);
+  image(code, width/6, height/3);
+  textSize(width / 40);
+  text("try the game!", width/2.2, height/2.6);
+  text("Portrait Mode Safari or Chrome on IPad", width/2.2, height/2.1);
+  text("Use the arrow keys or touch sides of screen to catch gifts.", width / 5, height / 1.33);
   textSize(width / 20);
-  text("Use the arrow keys to catch gifts.", width / 6, height / 1.33);
   text("Press left or right to start!", width / 4.29, height / 1.14);
   if (isRight || isLeft) {
     reset();
     gameState = GAME_STATE_PLAYING;
+  }
+  if(milliseconds/1000>20){
+    reset();
+    score = 0;
+    gameState = GAME_STATE_AUTOPLAYING;
   }
 }
 
 function drawLoss() {
   textSize(width / 12.5);
   text("Happy Holidays", width / 4, height / 4);
+  image(code, width/6, height/3);
   textSize(width / 20);
-  text("Use the arrow keys to catch gifts.", width / 6, height / 1.33);
+  text("You Caught: " + score + " Gifts!", width / 3.5, height / 1.6);
+  textSize(width / 40);
+  text("try the game!", width/2.2, height/2.6);
+  text("Portrait Mode Safari or Chrome on IPad", width/2.2, height/2.1);
+  text("Use the arrow keys or touch sides of screen to catch gifts.", width / 5, height / 1.33);
+  textSize(width / 20);
   text("Press left or right to start!", width / 4.29, height / 1.14);
   if (isRight || isLeft) {
     reset();
     score = 0;
     gameState = GAME_STATE_PLAYING;
+  }
+  if(milliseconds/1000>20){
+    reset();
+    score = 0;
+    gameState = GAME_STATE_AUTOPLAYING;
   }
 }
 
@@ -84,7 +108,12 @@ function drawPlaying() {
   edgeCollision();
   difficultyIncrease();
 
-  if (random(100 - (milliseconds / 3000)) < 1) {
+  if (random(400) < 1) {
+    gifts.push(new Gift());
+  }
+
+  if (milliseconds / 1000 > nextDrop) {
+    nextDrop += dropRate;
     gifts.push(new Gift());
   }
 
@@ -93,6 +122,7 @@ function drawPlaying() {
   player.displayBack();
 
   for (var j = gifts.length - 1; j >= 0; j--) {
+    gifts[j].velocity = giftSpeed;
     gifts[j].move();
     gifts[j].display();
     gifts[j].processCollision(j);
@@ -104,10 +134,69 @@ function drawPlaying() {
 }
 
 function drawAutoplaying() {
-  //nothing for awhile here
+  
+  edgeCollision();
+  difficultyIncrease();
+
+  if (random(400) < 1) {
+    gifts.push(new Gift());
+  }
+
+  if (milliseconds / 1000 > nextDrop) {
+    nextDrop += dropRate;
+    gifts.push(new Gift());
+  }
+
+  santa.move();
+  var lowest = 0;
+  for (var k = gifts.length - 1; k >= 0; k--) {
+    if(gifts[k].y>gifts[lowest].y){
+      lowest=k;
+    }
+  }
+  if(gifts.length>0&&player.x>gifts[lowest].x){
+    isRight=false;
+    isLeft=true;
+  }
+  if(gifts.length>0&&player.x<gifts[lowest].x){
+    isLeft=false;
+    isRight=true;
+  }
+  if(gifts.length>0&&player.x>gifts[lowest].x-15&&player.x<gifts[lowest].x+15){
+    isLeft=false;
+    isRight=false;
+  }
+  player.move();
+  player.displayBack();
+
+  for (var j = gifts.length - 1; j >= 0; j--) {
+    gifts[j].velocity = giftSpeed;
+    gifts[j].move();
+    gifts[j].display();
+    gifts[j].processCollision(j);
+  }
+
+  santa.display();
+  player.displayFront();
+  drawScore();
+  image(code, width/6, height/3);
+  textSize(width / 40);
+  fill('#FFFFFFF');
+  text("try the game!", width/2.2, height/2.6);
+  text("Portrait Mode Safari or Chrome on IPad", width/2.2, height/2.1);
+  
+  if(keyIsPressed===true||touches.length>0){
+    reset();
+    score = 0;
+    gameState = GAME_STATE_PLAYING;
+  }
 }
 
 function difficultyIncrease() {
+  if (milliseconds / 1000 > nextDropRateIncrease && dropRate > 1) {
+    nextDropRateIncrease += 20;
+    dropRate--;
+  }
   if (milliseconds > nextGiftSpeedIncrease) {
     giftSpeed++;
     nextGiftSpeedIncrease += 10000;
@@ -129,6 +218,9 @@ function reset() {
   nextSantaSpeedIncrease = 5000;
   nextGiftSpeedIncrease = 10000;
   giftSpeed = 4;
+  nextDrop = 2;
+  dropRate = 6;
+  nextDropRateIncrease = 10;
   gifts = [];
   lastTimeReset = millis();
 }
@@ -321,7 +413,7 @@ function Sleigh() {
 
   this.move = function() {
     if (this.x > this.wayPoint - this.speed && this.x < this.wayPoint + this.speed)
-      this.wayPoint = random(50, width - 50);
+      this.wayPoint = random(50, width - (100 + height / 20));
     if (this.x > this.wayPoint)
       this.x -= this.speed;
     if (this.x < this.wayPoint)
