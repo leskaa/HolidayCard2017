@@ -92,7 +92,7 @@ function drawLoss() {
   text("Use the arrow keys or touch sides of screen to catch gifts.", width / 5, height / 1.33);
   textSize(width / 20);
   text("Press left or right to start!", width / 4.29, height / 1.14);
-  if (isRight || isLeft) {
+  if ((isRight || isLeft)&&milliseconds/1000>2) {
     reset();
     score = 0;
     gameState = GAME_STATE_PLAYING;
