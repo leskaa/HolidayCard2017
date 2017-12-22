@@ -64,8 +64,8 @@ function drawMenu() {
   text("Happy Holidays", width / 4, height / 4);
   image(code, width/6, height/3);
   textSize(width / 40);
-  text("try the game!", width/2.2, height/2.6);
-  text("Portrait Mode Safari or Chrome on IPad", width/2.2, height/2.1);
+  text("Try the game!", width/2.2, height/2.6);
+  text("Safari or Chrome on IPad", width/2.2, height/2.1);
   text("Use the arrow keys or touch sides of screen to catch gifts.", width / 5, height / 1.33);
   textSize(width / 20);
   text("Press left or right to start!", width / 4.29, height / 1.14);
@@ -87,8 +87,8 @@ function drawLoss() {
   textSize(width / 20);
   text("You Caught: " + score + " Gifts!", width / 3.5, height / 1.6);
   textSize(width / 40);
-  text("try the game!", width/2.2, height/2.6);
-  text("Portrait Mode Safari or Chrome on IPad", width/2.2, height/2.1);
+  text("Try the game!", width/2.2, height/2.6);
+  text("Safari or Chrome on IPad", width/2.2, height/2.1);
   text("Use the arrow keys or touch sides of screen to catch gifts.", width / 5, height / 1.33);
   textSize(width / 20);
   text("Press left or right to start!", width / 4.29, height / 1.14);
@@ -182,8 +182,8 @@ function drawAutoplaying() {
   image(code, width/6, height/3);
   textSize(width / 40);
   fill('#FFFFFFF');
-  text("try the game!", width/2.2, height/2.6);
-  text("Portrait Mode Safari or Chrome on IPad", width/2.2, height/2.1);
+  text("Try the game!", width/2.2, height/2.6);
+  text("Safari or Chrome on IPad", width/2.2, height/2.1);
   
   if(keyIsPressed===true||touches.length>0){
     reset();
