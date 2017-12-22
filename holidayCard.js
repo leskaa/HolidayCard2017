@@ -17,7 +17,7 @@ const GAME_STATE_MENU = 0;
 const GAME_STATE_LOST = 1;
 const GAME_STATE_PLAYING = 2;
 const GAME_STATE_AUTOPLAYING = 3;
-var gameState = GAME_STATE_AUTOPLAYING;
+var gameState = GAME_STATE_MENU;
 
 function setup() {
   frameRate(30);
