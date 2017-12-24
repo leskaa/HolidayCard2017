@@ -376,10 +376,10 @@ function Gift() {
         } else {
           this.nudge(player.speed - 5);
         }
-      } else if (this.collision(player.x - 40, player.y + 30, 80, 20)) {
+      } else if (this.collision(player.x - 40, player.y + 30, 80, 40)) {
         gifts.splice(index, 1);
         score++;
-      } else if (this.y > height + 50) {
+      } else if (this.y > height + 20) {
         gameState = GAME_STATE_LOST;
         reset();
       }
