@@ -148,10 +148,12 @@ function drawAutoplaying() {
   }
 
   santa.move();
-  var lowest = 0;
+  var lowest = gifts.length-1;
   for (var k = gifts.length - 1; k >= 0; k--) {
-    if(gifts[k].y>gifts[lowest].y){
-      lowest=k;
+    if(gifts[k].y<height-100+(milliseconds/5000)){
+      if(gifts[k].y>gifts[lowest].y){
+        lowest=k;
+      }
     }
   }
   if(gifts.length>0&&player.x>gifts[lowest].x){
