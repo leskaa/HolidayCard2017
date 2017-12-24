@@ -164,7 +164,7 @@ function drawAutoplaying() {
     isLeft=false;
     isRight=true;
   }
-  if(gifts.length>0&&player.x>gifts[lowest].x-15&&player.x<gifts[lowest].x+15){
+  if(gifts.length>0&&player.x>gifts[lowest].x-5&&player.x<gifts[lowest].x+5){
     isLeft=false;
     isRight=false;
   }
