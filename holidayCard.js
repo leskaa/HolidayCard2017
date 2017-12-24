@@ -381,7 +381,7 @@ function Gift() {
       } else if (this.collision(player.x - 40, player.y + 30, 80, 40)) {
         gifts.splice(index, 1);
         score++;
-      } else if (this.y > height + 20) {
+      } else if (this.y > height) {
         gameState = GAME_STATE_LOST;
         reset();
       }
